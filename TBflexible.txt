@@ -1,0 +1,21 @@
+1.
+安装flexibel依赖:
+	npm i lib-flexible --save
+//main.js
+	import 'lib-flexible/felxible'
+2.安装px2rem：
+	cnpm i postcss-px2rem --save
+	cnpm install px2rem-loader --save
+
+3.在build目录下vue-loader.conf.js中
+
+module.exports = {
+	.....
+//添加这一行 px2rem配置
+	postcss:[require('postcss-px2rem')({'remUnit':75,'baseDpr':2})]
+
+}
+4. 实际开发中，设计稿多少尺寸，css就写多少尺寸，1:1对应关系 
+例：width： 75px;
+在浏览器实际显示效果就会自动转化为rem尺寸 width：1rem;
+
