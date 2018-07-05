@@ -150,7 +150,7 @@
         var _this = this,
             nodes = el.children, // 获取app的dom
             regevent = /^[0-9a-zA-Z]+$/,
-            emptyarray = [];
+            eventarray = [];
         for (var i = 0, len = nodes.length; i < len; i++) { // 遍历dom节点
             var node = nodes[i];
             if (node.children.length) {
@@ -159,11 +159,49 @@
             if (node.hasAttribute('@click') || node.hasAttribute('v-on:click')) { // 事件指令 
                 var attrEvent = node.getAttribute('@click') || node.getAttribute('v-on:click'); // 获取事件名
                 if(regevent.test(attrEvent)){
-                    emptyarray.push(attrEvent)
-                    console.log(emptyarray, 'Kongshuzu ')
+                    eventarray.push(attrEvent)
                 }else{
-                    console.warn(`${attrEvent}不是规法事件命名，请更换命名`)
+                    console.error(`${attrEvent}不是规范事件命名，请更换命名`)
                 }
+            }
+
+        }
+        return eventarray
+    }
+    function enterhanlder(el) {
+        var _this = this,
+            nodes = el.children;
+            console.log(nodes, 'nodes')
+        for (var i = 0, len = nodes.length; i < len; i++) { // 遍历dom节点
+            var node = nodes[i];
+            if (node.children.length) {
+                enterhanlder(node); // 递归深度遍历 dom树
+            }
+            if (node.hasAttributes()&&((node.hasAttribute('@click') || node.hasAttribute('v-on:click')))) {
+                var attrs = node.attributes;
+                var sda = Array.prototype.isPrototypeOf(node);
+                node.addEventListener('click',function(){
+                    console.log(i)
+                })
+            }
+        }
+    }
+    function evnettrigger (rcont, i, el, riger) {
+        var _this = this,
+            rconts = [],
+            nodes = el.children;
+        rconts.push(rcont)
+        var nodes = el.children;
+        for (var j = 0, len = nodes.length; j < len; j++) { // 遍历dom节点
+            var node = nodes[j];
+            // if (node.children.length) {
+            //     _transelval(node); // 递归深度遍历 dom树
+            // }
+            if (node.hasAttributes()&&((node.hasAttribute('@click') || node.hasAttribute('v-on:click')))) {
+                var attrs = node.attributes;
+                // node.onclick=function(){
+                //     console.log('213xasxas'+i)
+                // }
             }
         }
     }
@@ -171,10 +209,20 @@
         var methods = obj.methods;
         if (methods) {
             for (var key in methods) {
+                // console.log(this, 'this')
                 this[key] = abduct(methods[key], this);
             }
         }
-        traversal(el)
+        var eventaggregate = traversal(el)
+        var lens = eventaggregate.length,i;
+        Object.keys(methods).forEach(key => {
+            for(var i = 0;i<lens;i++){
+                if(eventaggregate[i] == key){
+                    evnettrigger(key, i, el, methods);
+                }
+            }
+        })
+        enterhanlder(el)
     }
     return Solar;
 }))
