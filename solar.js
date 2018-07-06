@@ -18,7 +18,7 @@
             onshow()
         }
     }
-})(this,(function (){
+})(typeof global !== "undefined" ? global : this.window || this.global,(function (){
 // mvvm入口函数  用于整合 数据监听器_observer、 指令解析器_compile、连接Observer和Compile的_watcherTpl
     function Solar(options = {}) { // 防止没传，设一个默认值
         this.$options = options; // 配置挂载
