@@ -29,7 +29,7 @@
         this._observer(this._data); // 传入数据，执行函数，重写数据的get set
         this._compile(this.$el); // 传入dom，执行函数，编译模板 发布订阅
         this._methods(this.$options, this.$el); //主动事件触发器
-        this._initstate(this.$options); //主动事件触发器
+        this._initstate(this.$options); //数据挂载初始化
         this._directnodes(this.$el); // 过去节点上绑定属性
         var bindings = {};
         this._bindings = bindings;
